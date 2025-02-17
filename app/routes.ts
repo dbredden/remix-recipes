@@ -9,4 +9,8 @@ export default [
     route("app", "routes/settings/app.tsx"),
     route("profile", "routes/settings/profile.tsx"),
   ]),
+  route("about", "routes/about.tsx", [
+    route("team", "routes/about/team.tsx"),
+    route("history", "routes/about/history.tsx")
+  ])
 ] satisfies RouteConfig;

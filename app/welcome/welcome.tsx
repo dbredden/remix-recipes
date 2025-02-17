@@ -1,5 +1,11 @@
 import logoDark from "./logo-dark.svg";
 import logoLight from "./logo-light.svg";
+import type { LinksFunction } from "react-router";
+import styles from "~/styles/index.css?url";
+
+export const links: LinksFunction = () => {
+  return [{rel:  "stylesheet", href: styles }]
+}
 
 export function Welcome() {
   return (

@@ -1,13 +1,17 @@
-import type { Route } from "./+types/home";
-import { Welcome } from "../welcome/welcome";
+import type { LinksFunction } from "react-router"
+import { Header } from "~/components/header";
+import { Paragraph } from "~/components/paragraph";
+import styles from "~/styles/index.css?url";
 
-export function meta({}: Route.MetaArgs) {
-  return [
-    { title: "New React Router App" },
-    { name: "description", content: "Welcome to React Router!" },
-  ];
+export const links: LinksFunction = () => {
+  return [{rel:  "stylesheet", href: styles }] 
 }
 
-export default function Home() {
-  return <Welcome />;
+export default function Index() {
+  return (
+    <div>
+      <Header>Home</Header>
+      <Paragraph>Welcome Home!</Paragraph>
+    </div>
+  )
 }
