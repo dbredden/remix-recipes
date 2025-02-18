@@ -10,7 +10,7 @@ import {
 
 import type { Route } from "./+types/root";
 import "./app.css";
-import styles from "~/shared.css?url";
+import { HomeIcon, DiscoverIcon, RecipeBookIcon, SettingsIcon } from "./components/icons";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -22,10 +22,6 @@ export const links: Route.LinksFunction = () => [
   {
     rel: "stylesheet",
     href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
-  },
-  {
-    rel: "stylesheet",
-    href: styles
   }
 ];
 
@@ -45,7 +41,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body>
+      <body className="flex h-screen">
         {children}
         <ScrollRestoration />
         <Scripts />
@@ -57,13 +53,17 @@ export function Layout({ children }: { children: React.ReactNode }) {
 export default function App() {
   return (
     <>
-      <nav>
-        <Link to="/">Home</Link>
-        <Link to="discover">Discover</Link>
-        <Link to="app">App</Link>
-        <Link to="settings">Settings</Link>
+      <nav className="bg-primary text-white">
+        <ul className="flex flex-col">
+        <li><AppNavLink to="/"><HomeIcon/></AppNavLink></li>
+        <li><AppNavLink to="discover"><DiscoverIcon/></AppNavLink></li>
+        <li><AppNavLink to="app"><RecipeBookIcon/></AppNavLink></li>
+        <li><AppNavLink to="settings"><SettingsIcon/></AppNavLink></li>
+        </ul>
       </nav>
-      <Outlet />
+      <div className = "p-4">
+        <Outlet />
+      </div>
     </>
   );
 }
@@ -95,4 +95,21 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
       )}
     </main>
   );
+}
+
+
+type AppNavLinkProps = {
+  children: React.ReactNode;
+  to: string;
+}
+function AppNavLink({children, to} : AppNavLinkProps) {
+  return (
+    <li className="w-16">
+      <Link to={to}>
+        <div className="py-4 flex justify-center hover:bg-primary-light">
+          {children}
+        </div>
+      </Link>
+    </li>
+  )
 }
