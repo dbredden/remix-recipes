@@ -6,8 +6,10 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  NavLink
 } from "react-router";
 
+import classNames from 'classnames';
 import type { Route } from "./+types/root";
 import "./app.css";
 import { HomeIcon, DiscoverIcon, RecipeBookIcon, SettingsIcon } from "./components/icons";
@@ -41,7 +43,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body className="flex h-screen">
+      <body className="md:flex md:h-screen">
         {children}
         <ScrollRestoration />
         <Scripts />
@@ -54,7 +56,7 @@ export default function App() {
   return (
     <>
       <nav className="bg-primary text-white">
-        <ul className="flex flex-col">
+        <ul className="flex md:flex-col">
         <li><AppNavLink to="/"><HomeIcon/></AppNavLink></li>
         <li><AppNavLink to="discover"><DiscoverIcon/></AppNavLink></li>
         <li><AppNavLink to="app"><RecipeBookIcon/></AppNavLink></li>
@@ -105,11 +107,20 @@ type AppNavLinkProps = {
 function AppNavLink({children, to} : AppNavLinkProps) {
   return (
     <li className="w-16">
-      <Link to={to}>
-        <div className="py-4 flex justify-center hover:bg-primary-light">
+      <NavLink to={to}>
+        {({isActive}) => (
+          <div 
+          className={classNames(
+            "py-4 flex justify-center hover:bg-primary-light",
+            {
+              "bg-primary-light": isActive,
+            }
+          )}
+        >
           {children}
         </div>
-      </Link>
+        )}
+      </NavLink>
     </li>
   )
 }
