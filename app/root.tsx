@@ -6,13 +6,15 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-  NavLink
+  NavLink,
+  useResolvedPath
 } from "react-router";
 
 import classNames from 'classnames';
 import type { Route } from "./+types/root";
 import "./app.css";
 import { HomeIcon, DiscoverIcon, RecipeBookIcon, SettingsIcon } from "./components/icons";
+import { useNavigation } from "react-router";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -105,6 +107,11 @@ type AppNavLinkProps = {
   to: string;
 }
 function AppNavLink({children, to} : AppNavLinkProps) {
+  const path = useResolvedPath(to);
+  const navigation = useNavigation();
+
+  const isLoading = 
+    navigation.state === "loading" && navigation.location.pathname === path.pathname;
   return (
     <li className="w-16">
       <NavLink to={to}>
@@ -112,9 +119,8 @@ function AppNavLink({children, to} : AppNavLinkProps) {
           <div 
           className={classNames(
             "py-4 flex justify-center hover:bg-primary-light",
-            {
-              "bg-primary-light": isActive,
-            }
+            isActive? "bg-primary-light" : "",
+            isLoading ? "animate-pulse bg-primary-light" : ""
           )}
         >
           {children}
